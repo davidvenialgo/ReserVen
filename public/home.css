@@ -1,0 +1,122 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Estilo del sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #218838; /* Verde oscuro */
+    color: #ffffff;
+    padding: 20px 0;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Encabezado del usuario */
+.sidebar-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #2dc653; /* Verde más claro para el borde */
+}
+
+.sidebar-header h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sidebar-header p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #a0b3c6;
+}
+
+/* Estilo de los elementos del menú */
+.sidebar-menu {
+    padding: 10px 0;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #a0b3c6;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu a:hover {
+    background-color: #2dc653; /* Verde más claro para el hover */
+    color: #ffffff;
+}
+
+.sidebar-menu a i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Contenido principal */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    flex-grow: 1;
+    background-color: #f4f6f9;
+}
+
+/* Estilo de la barra superior */
+.topbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.topbar a {
+    margin-left: 15px;
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.topbar a:hover {
+    color: #1a2b3c;
+}
+
+.topbar a i {
+    margin-right: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
