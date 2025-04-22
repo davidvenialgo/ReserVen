@@ -36,7 +36,7 @@ async function handleLogin() {
 
     try {
         console.log('Enviando:', JSON.stringify({ username, password }));
-        const API_URL = 'https://reserven-backend.herokuapp.com';
+        const API_URL = 'https://reser-ven.vercel.app';
         // Enviar las credenciales al backend
         const response = await fetch(`${API_URL}/api/auth/login`, {
             method: 'POST',
