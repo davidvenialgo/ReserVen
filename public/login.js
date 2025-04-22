@@ -36,19 +36,20 @@ async function handleLogin() {
 
     try {
         console.log('Enviando:', JSON.stringify({ username, password }));
+        const API_URL = 'https://reserven-backend.herokuapp.com';
         // Enviar las credenciales al backend
-        const response = await fetch(`${window.location.origin}/api/auth/login`, {
+        const response = await fetch(`${API_URL}/api/auth/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
-            success: function(response) {
-                console.log('Respuesta exitosa:', response);
-            },
-            error: function(error) {
-                console.error('Error en la solicitud:', error);
-            }
+            body: JSON.stringify({ username, password })
         });
-        console.log('Status code:', response.status);
+
+        if (!response.ok) {
+            // Lee el texto para mostrar un mensaje de error claro
+            const mensaje = await response.text();
+            showNotification('Error HTTP ' + response.status, mensaje, 'error');
+            return;
+        }
 
         const data = await response.json();
 
