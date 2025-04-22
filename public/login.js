@@ -40,7 +40,13 @@ async function handleLogin() {
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password }),
+            success: function(response) {
+                console.log('Respuesta exitosa:', response);
+            },
+            error: function(error) {
+                console.error('Error en la solicitud:', error);
+            }
         });
         console.log('Status code:', response.status);
 
@@ -68,4 +74,46 @@ async function handleLogin() {
         showNotification('Error', 'Hubo un problema al intentar iniciar sesión. Por favor, intenta de nuevo.', 'error');
         console.error('Error en la autenticación:', error);
     }
+}
+
+// Archivo público para manejar sesiones
+function checkSession() {
+    const sessionData = JSON.parse(localStorage.getItem('userSession') || '{}');
+    console.log("[Auth] Verificando sesión:", sessionData);
+    
+    // Si no hay sesión, redirigir al login
+    if (!sessionData.username) {
+        return false;
+    }
+    
+    // Verificar si la sesión ha expirado
+    if (sessionData.expiresAt && sessionData.expiresAt < new Date().getTime()) {
+        console.log("[Auth] Sesión expirada");
+        localStorage.removeItem('userSession');
+        return false;
+    }
+    
+    // Verificar la sesión con el servidor
+    fetch('/api/auth/validate-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: sessionData.username })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.valid) {
+            console.log("[Auth] Sesión inválida según servidor");
+            localStorage.removeItem('userSession');
+            window.location.href = '/login.html';
+        }
+    });
+    
+    return true;
+}
+
+// Borrar todas las sesiones
+function clearAllSessions() {
+    localStorage.removeItem('userSession');
+    console.log("[Auth] Todas las sesiones eliminadas");
+    window.location.href = '/login.html';
 }
